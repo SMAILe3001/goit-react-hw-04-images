@@ -1,68 +1,53 @@
+import { useState } from 'react';
+import { HiOutlineSearchCircle } from 'react-icons/hi';
 import PropTypes from 'prop-types';
-import { Component } from 'react';
 import CSS from './Searchbar.module.css';
 
-export class Searchbar extends Component {
-  state = {
-    searchText: '',
+export const Searchbar = ({ onSubmit, isLoading }) => {
+  const [searchText, setSearchText] = useState('');
+
+  const handelInputChange = e => {
+    setSearchText(e.currentTarget.value);
   };
 
-  handelInputChange = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
-  };
-
-  handelInputSubmit = e => {
+  const handelInputSubmit = e => {
     e.preventDefault();
-    const { searchText } = this.state;
 
-    this.props.onSubmit(searchText);
+    onSubmit(searchText);
 
-    this.resetForm();
+    setSearchText('');
   };
 
-  resetForm = () => {
-    this.setState({
-      searchText: '',
-    });
-  };
+  const {
+    searchbar,
+    searchForm,
+    searchFormButton,
+    searchFormLabel,
+    searchFormInput,
+  } = CSS;
 
-  render() {
-    const { handelInputChange, handelInputSubmit } = this;
-    const {
-      searchbar,
-      searchForm,
-      searchFormButton,
-      searchFormLabel,
-      searchFormInput,
-    } = CSS;
-    const { isLoading } = this.props;
-    const { searchText } = this.state;
-
-    return (
-      <header className={searchbar}>
-        <form className={searchForm} onSubmit={handelInputSubmit}>
-          <button
-            type="submit"
-            className={searchFormButton}
-            disabled={isLoading}
-          ></button>
-          <label className={searchFormLabel}>
-            <input
-              className={searchFormInput}
-              type="text"
-              name="searchText"
-              required
-              value={searchText}
-              onChange={handelInputChange}
-            />
-          </label>
-        </form>
-      </header>
-    );
-  }
-}
+  return (
+    <header className={searchbar}>
+      <form className={searchForm} onSubmit={handelInputSubmit}>
+        <button type="submit" className={searchFormButton} disabled={isLoading}>
+          <HiOutlineSearchCircle style={{ width: '32px', height: '32px' }} />
+        </button>
+        <label className={searchFormLabel}>
+          <input
+            className={searchFormInput}
+            type="text"
+            name="searchText"
+            required
+            value={searchText}
+            onChange={handelInputChange}
+          />
+        </label>
+      </form>
+    </header>
+  );
+};
 
 Searchbar.propType = {
   onSubmit: PropTypes.func,
+  isLoading: PropTypes.bool,
 };

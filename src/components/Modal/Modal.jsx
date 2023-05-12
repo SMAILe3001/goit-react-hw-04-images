@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import CSS from './Modal.module.css';
 
@@ -14,19 +14,19 @@ export const Modal = ({ onClose, children }) => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener('keydown', closetEscKetdown);
+  // useEffect(() => {
+  //   document.addEventListener('keydown', closetEscKetdown);
 
-    return () => {
-      document.removeEventListener('keydown', closetEscKetdown);
-    };
-  });
+  //   return () => {
+  //     document.removeEventListener('keydown', closetEscKetdown);
+  //   };
+  // });
 
-  const closetEscKetdown = e => {
-    if (e.code === 'Escape') {
-      onClose();
-    }
-  };
+  // const closetEscKetdown = e => {
+  //   if (e.code === 'Escape') {
+  //     onClose();
+  //   }
+  // };
 
   return createPortal(
     <div className={Overlay} onClick={hedelBackdropClick}>
