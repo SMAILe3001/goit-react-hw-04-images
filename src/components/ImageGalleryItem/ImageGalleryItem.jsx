@@ -1,31 +1,31 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import CSS from './ImageGalleryItem.module.css';
+import { Modal } from 'components/Modal';
 
-export function ImageGalleryItem({ images, toggleModal, contentModal }) {
+export function ImageGalleryItem({ image }) {
+  const { previewURL, tags, largeImageURL } = image;
+  const [showModal, setShowModal] = useState(false);
+
   return (
-    <>
-      {images.map(({ id, previewURL, webformatURL, tags }) => (
-        <li
-          className={CSS.imageGalleryItem}
-          key={id}
-          onClick={() => {
-            contentModal(webformatURL, tags);
-            toggleModal();
-          }}
-        >
-          <img
-            className={CSS.imageGalleryItemImage}
-            src={previewURL}
-            alt={tags}
-          />
-        </li>
-      ))}
-    </>
+    <li className={CSS.imageGalleryItem}>
+      <img
+        className={CSS.imageGalleryItemImage}
+        src={previewURL}
+        alt={tags}
+        onClick={() => {
+          setShowModal(true);
+        }}
+      />
+      {showModal && (
+        <Modal onClose={() => setShowModal(false)}>
+          <img src={largeImageURL} alt={tags} />
+        </Modal>
+      )}
+    </li>
   );
 }
 
 ImageGalleryItem.propType = {
-  images: PropTypes.string,
-  toggleModal: PropTypes.func,
-  contentModal: PropTypes.func,
+  image: PropTypes.object,
 };

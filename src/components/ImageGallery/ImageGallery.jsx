@@ -4,22 +4,16 @@ import { Button } from 'components/Button';
 import { Loader } from 'components/Loader';
 import CSS from './ImageGallery.module.css';
 
-export function ImageGallery({
-  pistures,
-  onClick,
-  totalHits,
-  isLoading,
-  ...andOther
-}) {
+export function ImageGallery({ images, onClick, totalHits, isLoading }) {
   return (
     <>
       <ul className={CSS.imageGallery}>
-        <ImageGalleryItem images={pistures} {...andOther} />
+        {images.map(image => (
+          <ImageGalleryItem image={image} key={image.id} />
+        ))}
       </ul>
       <Loader visible={isLoading} />
-      {totalHits > pistures.length && !isLoading && (
-        <Button onClick={onClick} />
-      )}
+      {totalHits > images.length && !isLoading && <Button onClick={onClick} />}
     </>
   );
 }

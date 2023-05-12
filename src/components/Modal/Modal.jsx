@@ -1,43 +1,42 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import CSS from './Modal.module.css';
 
 const modalRoot = document.querySelector('#modal_root');
 
-export class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.hendleKeyDown);
-  }
+export const Modal = ({ onClose, children }) => {
+  const { Overlay, Modal } = CSS;
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.hendleKeyDown);
-  }
-
-  hendleKeyDown = e => {
-    if (e.code === 'Escape') {
-      this.props.onClose();
-    }
-  };
-
-  hedelBackdropClick = e => {
+  const hedelBackdropClick = e => {
     if (e.target === e.currentTarget) {
-      this.props.onClose();
+      onClose();
     }
   };
 
-  render() {
-    const { Overlay, Modal } = CSS;
+  useEffect(() => {
+    document.addEventListener('keydown', closetEscKetdown);
 
-    return createPortal(
-      <div className={Overlay} onClick={this.hedelBackdropClick}>
-        <div className={Modal}>{this.props.children}</div>
-      </div>,
-      modalRoot
-    );
-  }
-}
+    return () => {
+      document.removeEventListener('keydown', closetEscKetdown);
+    };
+  }, []);
+
+  const closetEscKetdown = e => {
+    if (e.code === 'Escape') {
+      onClose();
+    }
+  };
+
+  return createPortal(
+    <div className={Overlay} onClick={hedelBackdropClick}>
+      <div className={Modal}>{children}</div>
+    </div>,
+    modalRoot
+  );
+};
 
 Modal.propType = {
+  onClose: PropTypes.func,
   children: PropTypes.object,
 };

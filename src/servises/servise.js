@@ -8,7 +8,7 @@ const baseSearchParams = {
   safesearch: true,
 };
 
-export async function fetchPictures(inputValue = 'flower', page = 1) {
+export async function fetchPictures(inputValue = 'spider', page = 1) {
   try {
     const response = await axios.get(`${BASE_URL}/`, {
       params: {

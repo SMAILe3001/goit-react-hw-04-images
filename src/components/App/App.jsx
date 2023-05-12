@@ -3,7 +3,6 @@ import CSS from './App.module.css';
 import { Searchbar } from 'components/Searchbar';
 import { ImageGallery } from 'components/ImageGallery';
 import { fetchPictures } from 'servises/servise';
-import { Modal } from 'components/Modal';
 
 export class App extends Component {
   state = {
@@ -12,9 +11,6 @@ export class App extends Component {
     error: false,
     search: '',
     total: NaN,
-    showModal: false,
-    bigImages: '',
-    alt: '',
   };
 
   searchPictures = async values => {
@@ -65,8 +61,7 @@ export class App extends Component {
   };
 
   render() {
-    const { isLoading, pictures, error, total, showModal, bigImages, alt } =
-      this.state;
+    const { isLoading, pictures, error, total } = this.state;
     const { searchPictures, nextPagePictures, toggleModal, contentModal } =
       this;
 
@@ -74,19 +69,13 @@ export class App extends Component {
       <div className={CSS.App}>
         <Searchbar onSubmit={searchPictures} isLoading={isLoading} />
         <ImageGallery
-          pistures={pictures}
+          images={pictures}
           totalHits={total}
           onClick={nextPagePictures}
           isLoading={isLoading}
           toggleModal={toggleModal}
           contentModal={contentModal}
         />
-
-        {showModal && (
-          <Modal onClose={toggleModal}>
-            <img src={bigImages} alt={alt} />
-          </Modal>
-        )}
         {error && <div>Походу щось зламалося</div>}
       </div>
     );
