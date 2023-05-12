@@ -2,7 +2,7 @@ import axios from 'axios';
 import { BASE_URL, API_KEY } from './api';
 
 const baseSearchParams = {
-  per_page: 3,
+  per_page: 12,
   image_type: 'photo',
   orientation: 'horizontal',
   safesearch: true,
