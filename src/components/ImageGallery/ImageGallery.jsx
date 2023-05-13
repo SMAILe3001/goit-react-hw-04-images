@@ -19,10 +19,8 @@ export function ImageGallery({ images, onClick, totalHits, isLoading }) {
 }
 
 ImageGallery.propType = {
-  pistures: PropTypes.array,
+  images: PropTypes.array,
   onClick: PropTypes.func,
   totalHits: PropTypes.number,
   isLoading: PropTypes.func,
-  toggleModal: PropTypes.func,
-  contentModal: PropTypes.func,
 };
