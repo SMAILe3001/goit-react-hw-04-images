@@ -33,6 +33,7 @@ export const App = () => {
         setIsLoading(true);
         const pistures = await fetchPictures(search, page);
         setPictures(prevState => [...prevState, ...pistures.hits]);
+        console.log(pistures);
         setTotal(pistures.totalHits);
       } catch (error) {
         setError(true);

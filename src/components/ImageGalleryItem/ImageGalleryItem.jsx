@@ -4,14 +4,14 @@ import CSS from './ImageGalleryItem.module.css';
 import { Modal } from 'components/Modal';
 
 export function ImageGalleryItem({ image }) {
-  const { previewURL, tags, largeImageURL } = image;
+  const { webformatURL, tags, largeImageURL } = image;
   const [showModal, setShowModal] = useState(false);
 
   return (
     <li className={CSS.imageGalleryItem}>
       <img
         className={CSS.imageGalleryItemImage}
-        src={previewURL}
+        src={webformatURL}
         alt={tags}
         onClick={() => {
           setShowModal(true);
